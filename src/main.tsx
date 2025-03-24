@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import PluginGate from "./components/PluginGate";
 import Homepage from "./components/Homepage";
 
-export const ID = "es.memorablenaton.map-location-keys";
+export const ID = "es.memorablenaton.shadowcrawler";
 const container = document.getElementById("app");
 const root = createRoot(container!);
 

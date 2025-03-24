@@ -1,13 +1,13 @@
 {
-  "name": "Map Location Keys",
-  "version": "2024-07-17",
+  "name": "Shadow Crawler",
+  "version": "2025-03-24",
   "manifest_version": 1,
   "icon": "/img/logo.png",
   "author": "Alvaro Cavalcanti",
-  "homepage_url": "https://github.com/alvarocavalcanti/map-location-keys",
-  "description": "Add location keys to your map by attaching them to text items.",
+  "homepage_url": "https://github.com/alvarocavalcanti/shadowcrawler",
+  "description": "A set of tools for running the Crawling phase of the Shadowdark RPG.",
   "action": {
-    "title": "Map Location Keys",
+    "title": "Shadow Crawler",
     "icon": "/img/icon.svg",
     "popover": "/",
     "height": 600,

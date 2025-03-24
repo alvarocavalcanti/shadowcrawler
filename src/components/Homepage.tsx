@@ -32,7 +32,7 @@ const Homepage: React.FC = () => {
         <Col xs lg="3"></Col>
         <Col md="6">
           <img
-            src="https://map-location-keys.vercel.app/img/hero.png"
+            src="https://shadowcrawler.vercel.app/img/hero.png"
             alt="Map Location Keys"
             className="mb-4"
             width="640"
@@ -108,27 +108,27 @@ const Homepage: React.FC = () => {
             to install the extension, and use the following URL:
             <br />
             <br />
-            <CodeBlock text="https://map-location-keys.vercel.app/manifest.json" />
+            <CodeBlock text="https://shadowcrawler.vercel.app/manifest.json" />
           </Container>
           <h2>Features in Action</h2>
           <br />
           <h3>Adding a Location Key</h3>
           <video
-            src="https://map-location-keys.vercel.app/video/01-add-location-key.mp4"
+            src="https://shadowcrawler.vercel.app/video/01-add-location-key.mp4"
             width="640"
             height="480"
             controls
           ></video>
           <h3 className="mt-4">Removing a Location Key</h3>
           <video
-            src="https://map-location-keys.vercel.app/video/02-remove-location-key.mp4"
+            src="https://shadowcrawler.vercel.app/video/02-remove-location-key.mp4"
             width="640"
             height="480"
             controls
           ></video>
           <h3 className="mt-4">Editing a Location Key</h3>
           <video
-            src="https://map-location-keys.vercel.app/video/03-edit-location-key.mp4"
+            src="https://shadowcrawler.vercel.app/video/03-edit-location-key.mp4"
             width="640"
             height="480"
             controls
@@ -136,21 +136,21 @@ const Homepage: React.FC = () => {
           <h3 className="mt-4">Import Location Keys</h3>
           See Help section below for the format.
           <video
-            src="https://map-location-keys.vercel.app/video/04-import-location-keys.mp4"
+            src="https://shadowcrawler.vercel.app/video/04-import-location-keys.mp4"
             width="640"
             height="480"
             controls
           ></video>
           <h3 className="mt-4">Showing a Location Key on the Map</h3>
           <video
-            src="https://map-location-keys.vercel.app/video/05-show-location-key.mp4"
+            src="https://shadowcrawler.vercel.app/video/05-show-location-key.mp4"
             width="640"
             height="480"
             controls
           ></video>
           <h3 className="mt-4">Exporting Location Keys</h3>
           <video
-            src="https://map-location-keys.vercel.app/video/06-export-location-keys.mp4"
+            src="https://shadowcrawler.vercel.app/video/06-export-location-keys.mp4"
             width="640"
             height="480"
             controls
