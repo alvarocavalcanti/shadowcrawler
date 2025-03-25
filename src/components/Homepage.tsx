@@ -44,7 +44,7 @@ const Homepage: React.FC = () => {
               <a href="https://owlbear.rodeo" target="_blank">
                 Owlbear Rodeo
               </a>{" "}
-              extension for adding location descriptions to a map.
+              extension with tools for running the crawling phase of the Shadowdark RPG.
               <br />
               By{" "}
               <a href="http://memorablenaton.es" target="_blank">

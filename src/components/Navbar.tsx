@@ -24,17 +24,7 @@ const Navbar: React.FC = () => {
               <NavDropdown title="Menu" id="basic-nav-dropdown">
                 <NavDropdown.Item>
                   <Link className="nav-item nav-link" to="/">
-                    Location Keys
-                  </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link className="nav-item nav-link" to={paths.bulkActions}>
-                    Add/Delete All
-                  </Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link className="nav-item nav-link" to={paths.importExport}>
-                    Export/Import
+                    Main
                   </Link>
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
