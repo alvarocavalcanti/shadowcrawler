@@ -22,7 +22,8 @@ const Main: React.FC = () => {
     return () => clearInterval(timer);
   }, [timerRunning, mode, countdown]);
 
-  const handleModeChange = (newMode: string) => {
+  const handleModeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newMode = event.target.value;
     setMode(newMode);
     setTimerRunning(false);
     if (newMode === timerModes.oneHour) {
@@ -57,6 +58,20 @@ const Main: React.FC = () => {
     }
   };
 
+  const renderShowToPlayersButton = () => (
+    <Button
+      onClick={() => setShowToPlayers((prev) => !prev)}
+      variant="primary"
+      title={showToPlayers ? "Hide from Players" : "Show to Players"}
+    >
+      {showToPlayers ? (
+        <i className="bi bi-eye-slash-fill"></i>
+      ) : (
+        <i className="bi bi-eye-fill"></i>
+      )}
+    </Button>
+  );
+
   return (
     <Container>
       <h1>Shadow Crawler</h1>A toolset for running the Crawling Phase of the{" "}
@@ -75,30 +90,26 @@ const Main: React.FC = () => {
               <Card.Title>Torch Timer</Card.Title>
               <Card.Text>
                 <Form>
-                  <div className="d-flex flex-wrap">
-                    <Form.Check
-                      type="radio"
-                      label={`1 Hour  `}
-                      value={timerModes.oneHour}
-                      checked={mode === timerModes.oneHour}
-                      onChange={() => handleModeChange(timerModes.oneHour)}
-                    />
-                    <Form.Check
-                      type="radio"
-                      label="10 Turns  "
-                      value={timerModes.tenTurns}
-                      checked={mode === timerModes.tenTurns}
-                      onChange={() => handleModeChange(timerModes.tenTurns)}
-                    />
-                  </div>
+                  <Form.Group>
+                    <Form.Label>Timer Mode</Form.Label>
+                    <Form.Select value={mode} onChange={handleModeChange}>
+                      <option value={timerModes.oneHour}>1 Hour</option>
+                      <option value={timerModes.tenTurns}>10 Turns</option>
+                    </Form.Select>
+                  </Form.Group>
                 </Form>
                 {mode === timerModes.oneHour ? (
                   <div>
-                    <p>
-                      Time remaining: {Math.floor(countdown / 60)}:
-                      {countdown % 60}
+                    <p className="mt-4">
+                      Time Remaining
+                      <br />
+                      {Math.floor(countdown / 60)}:
+                      {countdown === 3600 ? "00" : countdown % 60}
                     </p>
-                    <Button onClick={toggleTimer}>
+                    <Button
+                      onClick={toggleTimer}
+                      style={{ marginRight: "0.5rem" }}
+                    >
                       {timerRunning ? (
                         <i className="bi bi-stop-fill"></i>
                       ) : (
@@ -108,40 +119,39 @@ const Main: React.FC = () => {
                     <Button
                       onClick={resetTimer}
                       variant="secondary"
-                      className="ml-2"
+                      style={{ marginRight: "0.5rem" }}
                     >
                       <i className="bi bi-arrow-repeat"></i>
                     </Button>
+                    {renderShowToPlayersButton()}
                   </div>
                 ) : (
                   <div>
-                    <div className="d-flex flex-wrap">
-                      {turns.map((turn, index) => (
-                        <Form.Check
-                          key={index}
-                          type="checkbox"
-                          label={`${index < 9 ? "0" : ""}${index + 1}`}
-                          checked={turn}
-                          onChange={() => handleTurnCheckboxChange(index)}
-                          className="mr-2"
-                        />
-                      ))}
-                    </div>
+                    <Form.Group>
+                      <Form.Label className="mt-4">Turns</Form.Label>
+                      <div className="d-flex flex-wrap mb-2">
+                        {turns.map((turn, index) => (
+                          <Form.Check
+                            key={index}
+                            type="checkbox"
+                            label={`${index < 9 ? "0" : ""}${index + 1}`}
+                            checked={turn}
+                            onChange={() => handleTurnCheckboxChange(index)}
+                            style={{ marginRight: "0.5rem" }}
+                          />
+                        ))}
+                      </div>
+                    </Form.Group>
                     <Button
                       onClick={resetTimer}
                       variant="secondary"
-                      className="mt-2"
+                      style={{ marginRight: "0.5rem" }}
                     >
                       <i className="bi bi-arrow-repeat"></i>
                     </Button>
+                    {renderShowToPlayersButton()}
                   </div>
                 )}
-                <Form.Check
-                  type="checkbox"
-                  label="Show to players"
-                  checked={showToPlayers}
-                  onChange={() => setShowToPlayers((prev) => !prev)}
-                />
               </Card.Text>
             </Card.Body>
           </Card>
