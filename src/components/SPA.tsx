@@ -1,40 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, Route, Routes } from "react-router-dom";
 
-import LocationKey from "./LocationKey";
-import LocationKeys from "./LocationKeys";
-
-import type { LocationKey as LocationKeyType } from "../@types/types";
-import {
-  getItemText,
-  loadExistingLocationKeys,
-  sortLocationKeys,
-} from "../utils";
-import OBR, { Item, Player } from "@owlbear-rodeo/sdk";
+import OBR, { Player } from "@owlbear-rodeo/sdk";
 import { setupContextMenu } from "../contextMenu";
 import Help from "./Help";
 import Navbar from "./Navbar";
-import ImportExport from "./ImportExport";
-import { paths } from "./util/constants";
 import PlayerView from "./PlayerView";
-import AddDeleteAll from "./AddDeleteAll";
+import { paths } from "./util/constants";
+import Main from "./Main";
 
 export default function SPA() {
-  const [locationKeyToEdit, setLocationKeyToEdit] = React.useState(
-    {} as LocationKeyType
-  );
-  const [locationKeys, setLocationKeys] = React.useState<LocationKey[]>([]);
   const [role, setRole] = React.useState<"GM" | "PLAYER">("GM");
-
-  const loadLocationKeys = (items: Item[]): void => {
-    const newLocationKeys: LocationKey[] = [];
-
-    loadExistingLocationKeys(items, newLocationKeys, getItemText);
-
-    sortLocationKeys(newLocationKeys);
-
-    setLocationKeys(newLocationKeys);
-  };
 
   const setTheme = (theme: string): void => {
     document.getElementById("html_root")?.setAttribute("data-bs-theme", theme);
@@ -55,14 +31,6 @@ export default function SPA() {
   useEffect(() => {
     OBR.onReady(() => {
       setupContextMenu();
-      OBR.scene.items
-        .getItems((item) => {
-          return item.layer === "TEXT" || item.layer === "PROP";
-        })
-        .then((items) => loadLocationKeys(items));
-      OBR.scene.items.onChange((items) => {
-        loadLocationKeys(items.filter((item) => item.layer === "TEXT" || item.layer === "PROP"));
-      });
       OBR.theme.getTheme().then((theme) => {
         setTheme(theme.mode.toLowerCase());
       });
@@ -77,29 +45,7 @@ export default function SPA() {
   return role === "GM" ? (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route
-          index
-          element={
-            <LocationKeys
-              setLocationKeyToEdit={setLocationKeyToEdit}
-              locationKeys={locationKeys}
-            />
-          }
-        />
-        <Route
-          path={paths.locationKey}
-          element={
-            <LocationKey
-              locationKey={locationKeyToEdit}
-              setSelectedLocationKey={setLocationKeyToEdit}
-            />
-          }
-        />
-        <Route
-          path={paths.importExport}
-          element={<ImportExport locationKeys={locationKeys} />}
-        />
-        <Route path={paths.bulkActions} element={<AddDeleteAll />} />
+        <Route index element={<Main />} />
         <Route path={paths.help} element={<Help version={version} />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
