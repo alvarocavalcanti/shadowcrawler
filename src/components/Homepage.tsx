@@ -118,8 +118,8 @@ const Homepage: React.FC = () => {
           />
           <h2>Player View</h2>
           <Container className="mb-4">
-            The Location Keys <strong>in the extension drawer</strong> are only
-            visible to the GM, the players will see a funny GIF instead.
+            All the information is hidden from the players, and they can only
+            see the torch timer and counter if you choose so.
           </Container>
           <PlayerView />
           <br />

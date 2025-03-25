@@ -62,9 +62,14 @@ const Main: React.FC = () => {
     }
   };
 
+  const handleShowToPlayersChange = () => {
+    OBR.notification.show("Not yet implemented!");
+    setShowToPlayers((prev) => !prev)
+  };
+
   const renderShowToPlayersButton = () => (
     <Button
-      onClick={() => setShowToPlayers((prev) => !prev)}
+      onClick={() => handleShowToPlayersChange()}
       variant="primary"
       title={showToPlayers ? "Hide from Players" : "Show to Players"}
     >
