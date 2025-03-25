@@ -13,3 +13,26 @@ learn-more: https://github.com/alvarocavalcanti/shadowcrawler
 # Shadow Crawler
 
 ![Shadow Crawler](img/hero.png)
+
+This extension provides a toolset to run the Crawling phase of the Shadowdark RPG. This
+toolset includes the following features.
+
+## Torch Timer
+
+Keep track of the torch either using real-time or turn count.
+
+![Real-time Torch](img/torch-timer-01-real-time.png)
+![Turn Count Torch](img/torch-timer-01-turn-count.png)
+
+## Crawling Turns Counter
+
+Keep track of the current crawling turn.
+
+![Turn Counter](img/turn-counter.png)
+
+## Random Encounter
+
+Whenever you need to check for a random encounter, you can use this simple dice roller. The result
+box will became **red** on a `1`.
+
+![Dice Roller](img/random-encounter-roller.png)

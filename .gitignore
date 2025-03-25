@@ -6,3 +6,7 @@ coverage/
 *.log
 *.log.*
 *.log-*
+
+.env
+.DS_Store
+public/.DS_Store

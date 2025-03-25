@@ -16,7 +16,7 @@ const Homepage: React.FC = () => {
       .then((j) => j.version)
       .then(setVersion);
   }, []);
-  
+
   useEffect(() => {
     if (!isHomepage) {
       window.location.href = "/?homepage";
@@ -30,18 +30,19 @@ const Homepage: React.FC = () => {
         <Col md="6">
           <img
             src="https://shadowcrawler.vercel.app/img/hero.png"
-            alt="Map Location Keys"
+            alt="Shadow Crawler"
             className="mb-4"
             width="640"
           />
-          <h1>Map Location Keys</h1>
+          <h1>Shadow Crawler</h1>
           <Container className="mb-4">
             <em>
               An{" "}
               <a href="https://owlbear.rodeo" target="_blank">
                 Owlbear Rodeo
               </a>{" "}
-              extension with tools for running the crawling phase of the Shadowdark RPG.
+              extension with tools for running the crawling phase of the
+              Shadowdark RPG.
               <br />
               By{" "}
               <a href="http://memorablenaton.es" target="_blank">
@@ -72,31 +73,10 @@ const Homepage: React.FC = () => {
           </Container>
           <h2>Overview</h2>
           <Container className="mb-4">
-            With this extension you can add "location keys" to a map, which
-            usually contain descriptions of a particular room or feature.
-          </Container>
-          <Container className="mb-4">
-            It's almost like adding notes/post-its but they are only visible to
-            the GM.
-          </Container>
-          <Container className="mb-4">
-            You only need to add a text item to the map, ideally one or two
-            characters long, eg: 1, 5a, B2, etc.
-          </Container>
-          <Container className="mb-4">
-            Then using the context menu you can add it to the Location Keys.
-            Now, using the drawer menu you can see a default description has
-            been added for that item, but you can edit it as you like.
-          </Container>
-          <Container className="mb-4">
-            The description supports Markdown and there are Import/Export
-            features for handling several locations at a time.
-          </Container>
-          <Container className="mb-4">
-            The idea here is to reduce tab switching between OBR and wherever
-            your map descriptions are. With a little prep you can add the
-            descriptions to OBR, ideally in a summarised form, and have a
-            smoother experience.
+            This extension provides a toolset to run the Crawling phase of the
+            Shadowdark RPG. This toolset includes a torch timer (both real-time
+            and turn-based), a crawling turn counter, a random encounter dice
+            roller, and the ability to save and load the extension state.
           </Container>
           <h2>Installation</h2>
           <Container className="mb-4">
@@ -109,56 +89,37 @@ const Homepage: React.FC = () => {
           </Container>
           <h2>Features in Action</h2>
           <br />
-          <h3>Adding a Location Key</h3>
-          <video
-            src="https://shadowcrawler.vercel.app/video/01-add-location-key.mp4"
-            width="640"
-            height="480"
-            controls
-          ></video>
-          <h3 className="mt-4">Removing a Location Key</h3>
-          <video
-            src="https://shadowcrawler.vercel.app/video/02-remove-location-key.mp4"
-            width="640"
-            height="480"
-            controls
-          ></video>
-          <h3 className="mt-4">Editing a Location Key</h3>
-          <video
-            src="https://shadowcrawler.vercel.app/video/03-edit-location-key.mp4"
-            width="640"
-            height="480"
-            controls
-          ></video>
-          <h3 className="mt-4">Import Location Keys</h3>
-          See Help section below for the format.
-          <video
-            src="https://shadowcrawler.vercel.app/video/04-import-location-keys.mp4"
-            width="640"
-            height="480"
-            controls
-          ></video>
-          <h3 className="mt-4">Showing a Location Key on the Map</h3>
-          <video
-            src="https://shadowcrawler.vercel.app/video/05-show-location-key.mp4"
-            width="640"
-            height="480"
-            controls
-          ></video>
-          <h3 className="mt-4">Exporting Location Keys</h3>
-          <video
-            src="https://shadowcrawler.vercel.app/video/06-export-location-keys.mp4"
-            width="640"
-            height="480"
-            controls
-            className="mb-4"
-          ></video>
+          <h3>Torch Timer</h3>
+          Keep track of the torch either using real-time or turn count.
+          <img
+            src="https://shadowcrawler.vercel.app/img/torch-timer-01-real-time.png"
+            alt="Real-time Torch"
+            className="mb-2"
+          />
+          <img
+            src="https://shadowcrawler.vercel.app/img/torch-timer-01-turn-count.png"
+            alt="Turn Count Torch"
+            className="mb-2"
+          />
+          <h3 className="mt-4">Crawling Turns Counter</h3>
+          Keep track of the current crawling turn.
+          <img
+            src="https://shadowcrawler.vercel.app/img/turn-counter.png"
+            alt="Turn Counter"
+            className="mb-2"
+          />
+          <h3 className="mt-4">Random Encounter Dice Roller</h3>
+          Whenever you need to check for a random encounter, you can use this
+          simple dice roller. The result box will become **red** on a `1`.
+          <img
+            src="https://shadowcrawler.vercel.app/img/random-encounter-roller.png"
+            alt="Dice Roller"
+            className="mb-2"
+          />
           <h2>Player View</h2>
           <Container className="mb-4">
             The Location Keys <strong>in the extension drawer</strong> are only
             visible to the GM, the players will see a funny GIF instead.
-            However, the Location Keys <strong>on the map</strong> are visible
-            to everyone unless you <strong>hide</strong>.
           </Container>
           <PlayerView />
           <br />
