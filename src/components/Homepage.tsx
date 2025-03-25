@@ -110,7 +110,7 @@ const Homepage: React.FC = () => {
           />
           <h3 className="mt-4">Random Encounter Dice Roller</h3>
           Whenever you need to check for a random encounter, you can use this
-          simple dice roller. The result box will become **red** on a `1`.
+          simple dice roller. The result box will become red on a 1.
           <img
             src="https://shadowcrawler.vercel.app/img/random-encounter-roller.png"
             alt="Dice Roller"
