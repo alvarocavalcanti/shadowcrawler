@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { timerModes } from "./util/constants";
+import OBR from "@owlbear-rodeo/sdk";
 
 const Main: React.FC = () => {
   const [mode, setMode] = useState<string>(timerModes.oneHour);
@@ -11,7 +12,9 @@ const Main: React.FC = () => {
   const [crawlingTurns, setCrawlingTurns] = useState(0);
   const [showToPlayers, setShowToPlayers] = useState(false);
   const [timerRunning, setTimerRunning] = useState(false);
-  const [randomEncounterRoll, setRandomEncounterRoll] = useState<string | number>("-");
+  const [randomEncounterRoll, setRandomEncounterRoll] = useState<
+    string | number
+  >("-");
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -78,6 +81,35 @@ const Main: React.FC = () => {
     setRandomEncounterRoll("-");
     await new Promise((resolve) => setTimeout(resolve, 500)); // Wait for 300ms
     setRandomEncounterRoll(roll);
+  };
+
+  const saveStateToLocalStorage = () => {
+    const state = {
+      mode,
+      countdown,
+      turns,
+      crawlingTurns,
+      showToPlayers,
+      randomEncounterRoll,
+    };
+    localStorage.setItem("shadowcrawlerState", JSON.stringify(state));
+    OBR.notification.show("Current state saved!");
+  };
+
+  const loadStateFromLocalStorage = () => {
+    const savedState = localStorage.getItem("shadowcrawlerState");
+    if (savedState) {
+      const state = JSON.parse(savedState);
+      setMode(state.mode);
+      setCountdown(state.countdown);
+      setTurns(state.turns);
+      setCrawlingTurns(state.crawlingTurns);
+      setShowToPlayers(state.showToPlayers);
+      setRandomEncounterRoll(state.randomEncounterRoll);
+      OBR.notification.show("Previous state saved!");
+    } else {
+      OBR.notification.show("No previous state found!");
+    }
   };
 
   return (
@@ -215,7 +247,20 @@ const Main: React.FC = () => {
           </Card>
         </Col>
       </Row>
-      <Row className="mt-4"></Row>
+      <Row className="mt-4 mb-4">
+        <Col>
+          <Button
+            onClick={saveStateToLocalStorage}
+            variant="success"
+            style={{ marginRight: "0.5rem" }}
+          >
+            Save
+          </Button>
+          <Button onClick={loadStateFromLocalStorage} variant="info">
+            Load
+          </Button>
+        </Col>
+      </Row>
     </Container>
   );
 };

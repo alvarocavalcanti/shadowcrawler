@@ -1,10 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { analytics } from "../utils";
 
 const Help: React.FC<{ version: string }> = ({ version }) => {
-  analytics.page();
-
   return (
     <>
       <Container className="mt-3 text-center">

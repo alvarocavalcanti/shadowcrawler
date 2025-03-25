@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, Navigate, Route, Routes } from "react-router-dom";
 
 import OBR, { Player } from "@owlbear-rodeo/sdk";
-import { setupContextMenu } from "../contextMenu";
 import Help from "./Help";
 import Navbar from "./Navbar";
 import PlayerView from "./PlayerView";
@@ -30,7 +29,6 @@ export default function SPA() {
 
   useEffect(() => {
     OBR.onReady(() => {
-      setupContextMenu();
       OBR.theme.getTheme().then((theme) => {
         setTheme(theme.mode.toLowerCase());
       });

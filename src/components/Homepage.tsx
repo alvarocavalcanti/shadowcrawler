@@ -4,7 +4,6 @@ import { CodeBlock } from "react-code-blocks";
 
 import Help from "./Help";
 import PlayerView from "./PlayerView";
-import { analytics } from "../utils";
 
 const Homepage: React.FC = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -23,8 +22,6 @@ const Homepage: React.FC = () => {
       window.location.href = "/?homepage";
     }
   }, []);
-
-  analytics.page();
 
   return (
     <Container>
