@@ -74,7 +74,7 @@ const Homepage: React.FC = () => {
           <h2>Overview</h2>
           <Container className="mb-4">
             This extension provides a toolset to run the Crawling phase of the
-            Shadowdark RPG. This toolset includes a torch timer (both real-time
+            Shadowdark RPG. It includes a torch timer (both real-time
             and turn-based), a crawling turn counter, a random encounter dice
             roller, and the ability to save and load the extension state.
           </Container>
