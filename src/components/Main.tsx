@@ -11,6 +11,7 @@ const Main: React.FC = () => {
   const [crawlingTurns, setCrawlingTurns] = useState(0);
   const [showToPlayers, setShowToPlayers] = useState(false);
   const [timerRunning, setTimerRunning] = useState(false);
+  const [randomEncounterRoll, setRandomEncounterRoll] = useState<string | number>("-");
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -71,6 +72,13 @@ const Main: React.FC = () => {
       )}
     </Button>
   );
+
+  const rollRandomEncounter = async () => {
+    const roll = Math.floor(Math.random() * 6) + 1;
+    setRandomEncounterRoll("-");
+    await new Promise((resolve) => setTimeout(resolve, 500)); // Wait for 300ms
+    setRandomEncounterRoll(roll);
+  };
 
   return (
     <Container>
@@ -163,14 +171,51 @@ const Main: React.FC = () => {
             <Card.Body>
               <Card.Title>Crawling Turns Counter</Card.Title>
               <Card.Text>
-                <Button onClick={() => handleCrawlingTurnsChange(-1)}>-</Button>
-                <span className="mx-2">{crawlingTurns}</span>
+                <Button
+                  onClick={() => handleCrawlingTurnsChange(-1)}
+                  style={{ marginRight: "0.5rem" }}
+                >
+                  -
+                </Button>
+                <Button
+                  onClick={() => {}}
+                  style={{ marginRight: "0.5rem" }}
+                  variant="secondary"
+                >
+                  {crawlingTurns < 10 ? "0" : ""}
+                  {crawlingTurns}
+                </Button>
                 <Button onClick={() => handleCrawlingTurnsChange(1)}>+</Button>
               </Card.Text>
             </Card.Body>
           </Card>
         </Col>
       </Row>
+      <Row>
+        <Col>
+          <Card className="mt-4">
+            <Card.Body>
+              <Card.Title>Random Encounter</Card.Title>
+              <Card.Text>
+                <Button
+                  onClick={() => {
+                    rollRandomEncounter();
+                  }}
+                  style={{ marginRight: "0.5rem" }}
+                >
+                  Roll 1d6
+                </Button>
+                <Button
+                  variant={randomEncounterRoll === 1 ? "danger" : "secondary"}
+                >
+                  {randomEncounterRoll}
+                </Button>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      <Row className="mt-4"></Row>
     </Container>
   );
 };
