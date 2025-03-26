@@ -36,3 +36,10 @@ Whenever you need to check for a random encounter, you can use this simple dice 
 box will became **red** on a `1`.
 
 ![Dice Roller](img/random-encounter-roller.png)
+
+## Player View
+
+You can toggle the `Torch Timer` to be visible to the players. And they will see it as follows:
+
+![Players Real-time Torch](img/torch-timer-02-real-time.png)
+![Players Turn Count Torch](img/torch-timer-02-turn-count.png)

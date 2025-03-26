@@ -3,7 +3,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import { CodeBlock } from "react-code-blocks";
 
 import Help from "./Help";
-import PlayerView from "./PlayerView";
 
 const Homepage: React.FC = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -117,11 +116,18 @@ const Homepage: React.FC = () => {
             className="mb-2"
           />
           <h2>Player View</h2>
-          <Container className="mb-4">
-            All the information is hidden from the players, and they can only
-            see the torch timer and counter if you choose so.
-          </Container>
-          <PlayerView />
+          You can toggle the <strong>Torch Timer</strong> to be visible to the players.
+          And they will see it as follows:
+          <img
+            src="https://shadowcrawler.vercel.app/img/torch-timer-02-real-time.png"
+            alt="Real-time Torch"
+            className="mb-2"
+          />
+          <img
+            src="https://shadowcrawler.vercel.app/img/torch-timer-02-turn-count.png"
+            alt="Turn Count Torch"
+            className="mb-2"
+          />
           <br />
           <h2>Feedback</h2>
           There are a few ways to provide feedback:
