@@ -4,8 +4,10 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { timerModes } from "./util/constants";
 import OBR from "@owlbear-rodeo/sdk";
+import PlayerView from "./PlayerView";
+import { ID } from "../main";
 
-const Main: React.FC = () => {
+const Main: React.FC<{ player: boolean }> = ({ player }) => {
   const [mode, setMode] = useState<string>(timerModes.oneHour);
   const [countdown, setCountdown] = useState(3600); // 1 hour in seconds
   const [turns, setTurns] = useState(Array(10).fill(false));
@@ -23,12 +25,48 @@ const Main: React.FC = () => {
         setCountdown((prevCountdown) => prevCountdown - 1);
       }, 1000);
     }
+    if (showToPlayers) {
+      OBR.broadcast.sendMessage(`${ID}-countdown`, countdown);
+    }
     return () => clearInterval(timer);
   }, [timerRunning, mode, countdown]);
+
+  useEffect(
+    () =>
+      OBR.broadcast.onMessage(`${ID}-show-to-players`, (event) => {
+        setShowToPlayers(event.data === true);
+      }),
+    [showToPlayers]
+  );
+
+  useEffect(
+    () =>
+      OBR.broadcast.onMessage(`${ID}-countdown`, (event) => {
+        setCountdown(event.data as number);
+      }),
+    [countdown]
+  );
+
+  useEffect(
+    () =>
+      OBR.broadcast.onMessage(`${ID}-mode`, (event) => {
+        setMode(event.data as string);
+      }),
+    [mode]
+  );
+
+  useEffect(
+    () =>
+      OBR.broadcast.onMessage(`${ID}-turns`, (event) => {
+        setTurns(event.data as boolean[]);
+      }),
+    [mode]
+  );
 
   const handleModeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newMode = event.target.value;
     setMode(newMode);
+    OBR.broadcast.sendMessage(`${ID}-mode`, newMode);
     setTimerRunning(false);
     if (newMode === timerModes.oneHour) {
       setCountdown(3600);
@@ -43,6 +81,7 @@ const Main: React.FC = () => {
       newTurns[index] = !newTurns[index];
       return newTurns;
     });
+    OBR.broadcast.sendMessage(`${ID}-turns`, turns);
   };
 
   const handleCrawlingTurnsChange = (delta: number) => {
@@ -63,8 +102,7 @@ const Main: React.FC = () => {
   };
 
   const handleShowToPlayersChange = () => {
-    OBR.notification.show("Not yet implemented!");
-    setShowToPlayers((prev) => !prev)
+    setShowToPlayers((prev) => !prev);
   };
 
   const renderShowToPlayersButton = () => (
@@ -117,7 +155,47 @@ const Main: React.FC = () => {
     }
   };
 
-  return (
+  useEffect(() => {
+    OBR.broadcast.sendMessage(`${ID}-show-to-players`, showToPlayers);
+  }, [showToPlayers]);
+
+  return player ? (
+    showToPlayers ? (
+      <Container>
+        <h1>Shadow Crawler</h1>
+        <Row>
+          <Col>
+            <Card className="mt-4">
+              <Card.Body>
+                <Card.Title>Torch Timer</Card.Title>
+                <Card.Text>
+                  {mode === timerModes.oneHour ? (
+                    <div>
+                      <p className="mt-4">
+                        Time Remaining
+                        <br />
+                        {Math.floor(countdown / 60)}:
+                        {countdown === 3600 ? "00" : countdown % 60}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="d-flex flex-wrap mb-2">
+                      <p className="mt-4">Turns</p>
+                      <p className="mt-4">
+                        Current Turn: {turns.filter((turn) => turn).length}
+                      </p>
+                    </div>
+                  )}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    ) : (
+      <PlayerView />
+    )
+  ) : (
     <Container>
       <h1>Shadow Crawler</h1>A toolset for running the Crawling Phase of the{" "}
       <a

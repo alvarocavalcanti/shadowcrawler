@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 
 import OBR, { Player } from "@owlbear-rodeo/sdk";
 import Help from "./Help";
-import Navbar from "./Navbar";
-import PlayerView from "./PlayerView";
-import { paths } from "./util/constants";
 import Main from "./Main";
+import Navbar from "./Navbar";
+import { paths } from "./util/constants";
 
 export default function SPA() {
   const [role, setRole] = React.useState<"GM" | "PLAYER">("GM");
@@ -40,18 +39,13 @@ export default function SPA() {
     });
   }, []);
 
-  return role === "GM" ? (
+  return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Main />} />
+        <Route index element={<Main player={role === "PLAYER"} />} />
         <Route path={paths.help} element={<Help version={version} />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
-    </Routes>
-  ) : (
-    <Routes>
-      <Route path="/" element={<Navigate to={paths.playerView} />} />
-      <Route path={paths.playerView} element={<PlayerView />} />
     </Routes>
   );
 }
