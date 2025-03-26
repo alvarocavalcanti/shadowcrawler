@@ -10,7 +10,7 @@ import { ID } from "../main";
 const Main: React.FC<{ player: boolean }> = ({ player }) => {
   const [mode, setMode] = useState<string>(timerModes.oneHour);
   const [countdown, setCountdown] = useState(3600); // 1 hour in seconds
-  const [turns, setTurns] = useState(Array(10).fill(false));
+  const [torchTurn, setTorchTurn] = useState(0);
   const [crawlingTurns, setCrawlingTurns] = useState(0);
   const [showToPlayers, setShowToPlayers] = useState(false);
   const [timerRunning, setTimerRunning] = useState(false);
@@ -55,13 +55,11 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
     [mode]
   );
 
-  useEffect(
-    () =>
-      OBR.broadcast.onMessage(`${ID}-turns`, (event) => {
-        setTurns(event.data as boolean[]);
-      }),
-    [mode]
-  );
+  useEffect(() => {
+    OBR.broadcast.onMessage(`${ID}-torchTurn`, (event) => {
+      setTorchTurn(event.data as number);
+    });
+  }, [torchTurn]);
 
   const handleModeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newMode = event.target.value;
@@ -71,17 +69,13 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
     if (newMode === timerModes.oneHour) {
       setCountdown(3600);
     } else {
-      setTurns(Array(10).fill(false));
+      setTorchTurn(0);
     }
   };
 
-  const handleTurnCheckboxChange = (index: number) => {
-    setTurns((prevTurns) => {
-      const newTurns = [...prevTurns];
-      newTurns[index] = !newTurns[index];
-      return newTurns;
-    });
-    OBR.broadcast.sendMessage(`${ID}-turns`, turns);
+  const handleTorchTurn = (delta: number) => {
+    OBR.broadcast.sendMessage(`${ID}-torchTurn`, torchTurn + delta);
+    setTorchTurn((prevTorchTurn) => prevTorchTurn + delta);
   };
 
   const handleCrawlingTurnsChange = (delta: number) => {
@@ -97,7 +91,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
     if (mode === timerModes.oneHour) {
       setCountdown(3600);
     } else {
-      setTurns(Array(10).fill(false));
+      setTorchTurn(0);
     }
   };
 
@@ -130,7 +124,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
     const state = {
       mode,
       countdown,
-      turns,
+      turns: torchTurn,
       crawlingTurns,
       showToPlayers,
       randomEncounterRoll,
@@ -145,7 +139,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
       const state = JSON.parse(savedState);
       setMode(state.mode);
       setCountdown(state.countdown);
-      setTurns(state.turns);
+      setTorchTurn(state.turns);
       setCrawlingTurns(state.crawlingTurns);
       setShowToPlayers(state.showToPlayers);
       setRandomEncounterRoll(state.randomEncounterRoll);
@@ -180,10 +174,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
                     </div>
                   ) : (
                     <div className="d-flex flex-wrap mb-2">
-                      <p className="mt-4">Turns</p>
-                      <p className="mt-4">
-                        Current Turn: {turns.filter((turn) => turn).length}
-                      </p>
+                      <p className="mt-4">Current Turn: {torchTurn}</p>
                     </div>
                   )}
                 </Card.Text>
@@ -215,7 +206,9 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
                 <Form>
                   <Form.Group>
                     <Form.Label>Timer Mode</Form.Label>
-                    <Form.Select value={mode} onChange={handleModeChange}>
+                    <Form.Select value={mode} onChange={handleModeChange}
+                      style={{ marginBottom: "0.5rem" }}
+                      >
                       <option value={timerModes.oneHour}>1 Hour</option>
                       <option value={timerModes.tenTurns}>10 Turns</option>
                     </Form.Select>
@@ -223,7 +216,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
                 </Form>
                 {mode === timerModes.oneHour ? (
                   <div>
-                    <p className="mt-4">
+                    <p>
                       Time Remaining
                       <br />
                       {Math.floor(countdown / 60)}:
@@ -249,31 +242,29 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
                     {renderShowToPlayersButton()}
                   </div>
                 ) : (
-                  <div>
-                    <Form.Group>
-                      <Form.Label className="mt-4">Turns</Form.Label>
-                      <div className="d-flex flex-wrap mb-2">
-                        {turns.map((turn, index) => (
-                          <Form.Check
-                            key={index}
-                            type="checkbox"
-                            label={`${index < 9 ? "0" : ""}${index + 1}`}
-                            checked={turn}
-                            onChange={() => handleTurnCheckboxChange(index)}
-                            style={{ marginRight: "0.5rem" }}
-                          />
-                        ))}
-                      </div>
-                    </Form.Group>
+                  <>
                     <Button
-                      onClick={resetTimer}
-                      variant="secondary"
+                      onClick={() => handleTorchTurn(-1)}
                       style={{ marginRight: "0.5rem" }}
                     >
-                      <i className="bi bi-arrow-repeat"></i>
+                      -
+                    </Button>
+                    <Button
+                      onClick={() => {}}
+                      style={{ marginRight: "0.5rem" }}
+                      variant="secondary"
+                    >
+                      {torchTurn < 10 ? "0" : ""}
+                      {torchTurn}
+                    </Button>
+                    <Button
+                      onClick={() => handleTorchTurn(1)}
+                      style={{ marginRight: "0.5rem" }}
+                    >
+                      +
                     </Button>
                     {renderShowToPlayersButton()}
-                  </div>
+                  </>
                 )}
               </Card.Text>
             </Card.Body>
