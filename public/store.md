@@ -43,3 +43,7 @@ You can toggle the `Torch Timer` to be visible to the players. And they will see
 
 ![Players Real-time Torch](img/torch-timer-02-real-time.png)
 ![Players Turn Count Torch](img/torch-timer-02-turn-count.png)
+
+## Data Storage
+
+The extension stores all the data in the browser's local storage, and loads it at startup.

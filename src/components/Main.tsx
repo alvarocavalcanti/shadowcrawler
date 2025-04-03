@@ -1,6 +1,6 @@
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { timerModes } from "./util/constants";
 import OBR from "@owlbear-rodeo/sdk";
@@ -17,6 +17,21 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
   const [randomEncounterRoll, setRandomEncounterRoll] = useState<
     string | number
   >("-");
+
+  useEffect(() => {
+    loadStateFromLocalStorage();
+  }, []);
+
+  useEffect(() => {
+    saveStateToLocalStorage();
+  }, [
+    mode,
+    countdown,
+    torchTurn,
+    crawlingTurns,
+    showToPlayers,
+    randomEncounterRoll,
+  ]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -130,7 +145,6 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
       randomEncounterRoll,
     };
     localStorage.setItem("shadowcrawlerState", JSON.stringify(state));
-    OBR.notification.show("Current state saved!");
   };
 
   const loadStateFromLocalStorage = () => {
@@ -143,9 +157,6 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
       setCrawlingTurns(state.crawlingTurns);
       setShowToPlayers(state.showToPlayers);
       setRandomEncounterRoll(state.randomEncounterRoll);
-      OBR.notification.show("Previous state saved!");
-    } else {
-      OBR.notification.show("No previous state found!");
     }
   };
 
@@ -206,9 +217,11 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
                 <Form>
                   <Form.Group>
                     <Form.Label>Timer Mode</Form.Label>
-                    <Form.Select value={mode} onChange={handleModeChange}
+                    <Form.Select
+                      value={mode}
+                      onChange={handleModeChange}
                       style={{ marginBottom: "0.5rem" }}
-                      >
+                    >
                       <option value={timerModes.oneHour}>1 Hour</option>
                       <option value={timerModes.tenTurns}>10 Turns</option>
                     </Form.Select>
@@ -319,20 +332,6 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
               </Card.Text>
             </Card.Body>
           </Card>
-        </Col>
-      </Row>
-      <Row className="mt-4 mb-4">
-        <Col>
-          <Button
-            onClick={saveStateToLocalStorage}
-            variant="success"
-            style={{ marginRight: "0.5rem" }}
-          >
-            Save
-          </Button>
-          <Button onClick={loadStateFromLocalStorage} variant="info">
-            Load
-          </Button>
         </Col>
       </Row>
     </Container>

@@ -115,7 +115,7 @@ const Homepage: React.FC = () => {
             alt="Dice Roller"
             className="mb-2"
           />
-          <h2>Player View</h2>
+          <h3>Player View</h3>
           You can toggle the <strong>Torch Timer</strong> to be visible to the players.
           And they will see it as follows:
           <img
@@ -128,6 +128,8 @@ const Homepage: React.FC = () => {
             alt="Turn Count Torch"
             className="mb-2"
           />
+          <h3>Data Storage</h3>
+          The extension stores all the data in the browser's local storage, and loads it at startup.
           <br />
           <h2>Feedback</h2>
           There are a few ways to provide feedback:
