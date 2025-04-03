@@ -334,6 +334,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
           </Card>
         </Col>
       </Row>
+      <Row className="mb-4"></Row>
     </Container>
   );
 };
