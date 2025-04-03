@@ -1,5 +1,5 @@
 export const paths: { [key: string]: string } = {
-  help: "/help",
+  about: "/about",
   playerView: "/player-view",
 };
 

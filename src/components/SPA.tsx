@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 
 import OBR, { Player } from "@owlbear-rodeo/sdk";
-import Help from "./Help";
+import About from "./About";
 import Main from "./Main";
 import Navbar from "./Navbar";
 import { paths } from "./util/constants";
@@ -43,7 +43,7 @@ export default function SPA() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Main player={role === "PLAYER"} />} />
-        <Route path={paths.help} element={<Help version={version} />} />
+        <Route path={paths.about} element={<About version={version} />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
     </Routes>

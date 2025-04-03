@@ -29,8 +29,8 @@ const Navbar: React.FC = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item>
-                  <Link className="nav-item nav-link" to={paths.help}>
-                    Help
+                  <Link className="nav-item nav-link" to={paths.about}>
+                    About
                   </Link>
                 </NavDropdown.Item>
               </NavDropdown>

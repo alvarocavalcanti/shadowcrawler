@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { CodeBlock } from "react-code-blocks";
 
-import Help from "./Help";
+import About from "./About";
 
 const Homepage: React.FC = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -73,8 +73,8 @@ const Homepage: React.FC = () => {
           <h2>Overview</h2>
           <Container className="mb-4">
             This extension provides a toolset to run the Crawling phase of the
-            Shadowdark RPG. It includes a torch timer (both real-time
-            and turn-based), a crawling turn counter, a random encounter dice
+            Shadowdark RPG. It includes a torch timer (both real-time and
+            turn-based), a crawling turn counter, a random encounter dice
             roller, and the ability to save and load the extension state.
           </Container>
           <h2>Installation</h2>
@@ -116,8 +116,8 @@ const Homepage: React.FC = () => {
             className="mb-2"
           />
           <h3>Player View</h3>
-          You can toggle the <strong>Torch Timer</strong> to be visible to the players.
-          And they will see it as follows:
+          You can toggle the <strong>Torch Timer</strong> to be visible to the
+          players. And they will see it as follows:
           <img
             src="https://shadowcrawler.vercel.app/img/torch-timer-02-real-time.png"
             alt="Real-time Torch"
@@ -129,7 +129,8 @@ const Homepage: React.FC = () => {
             className="mb-2"
           />
           <h3>Data Storage</h3>
-          The extension stores all the data in the browser's local storage, and loads it at startup.
+          The extension stores all the data in the browser's local storage, and
+          loads it at startup.
           <br />
           <h2>Feedback</h2>
           There are a few ways to provide feedback:
@@ -155,7 +156,7 @@ const Homepage: React.FC = () => {
             </li>
           </ul>
           <h2>Help Topics</h2>
-          <Help version={version} />
+          <About version={version} />
         </Col>
         <Col xs lg="3"></Col>
       </Row>
