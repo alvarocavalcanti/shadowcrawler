@@ -17,6 +17,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
   const [randomEncounterRoll, setRandomEncounterRoll] = useState<
     string | number
   >("-");
+  const [randomEncounterTurn, setRandomEncounterTurn] = useState(0);
 
   useEffect(() => {
     loadStateFromLocalStorage();
@@ -31,6 +32,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
     crawlingTurns,
     showToPlayers,
     randomEncounterRoll,
+    randomEncounterTurn,
   ]);
 
   useEffect(() => {
@@ -133,6 +135,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
     setRandomEncounterRoll("-");
     await new Promise((resolve) => setTimeout(resolve, 500)); // Wait for 300ms
     setRandomEncounterRoll(roll);
+    setRandomEncounterTurn(crawlingTurns)
   };
 
   const saveStateToLocalStorage = () => {
@@ -143,6 +146,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
       crawlingTurns,
       showToPlayers,
       randomEncounterRoll,
+      randomEncounterTurn,
     };
     localStorage.setItem("shadowcrawlerState", JSON.stringify(state));
   };
@@ -157,6 +161,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
       setCrawlingTurns(state.crawlingTurns);
       setShowToPlayers(state.showToPlayers);
       setRandomEncounterRoll(state.randomEncounterRoll);
+      setRandomEncounterTurn(state.randomEncounterTurn);
     }
   };
 
@@ -314,7 +319,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
         <Col>
           <Card className="mt-4">
             <Card.Body>
-              <Card.Title>Random Encounter</Card.Title>
+              <Card.Title>Random Encounter Check</Card.Title>
               <Card.Text>
                 <Button
                   onClick={() => {
@@ -326,9 +331,13 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
                 </Button>
                 <Button
                   variant={randomEncounterRoll === 1 ? "danger" : "secondary"}
+                  disabled
                 >
                   {randomEncounterRoll}
                 </Button>
+                <p className="mt-2">
+                  Last check's <b>Turn</b>: {randomEncounterTurn}
+                </p>
               </Card.Text>
             </Card.Body>
           </Card>
