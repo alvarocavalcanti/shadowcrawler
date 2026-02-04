@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardBody, Container } from "react-bootstrap";
 
 const PlayerView: React.FC = () => {
   const gifs = [
@@ -19,18 +18,18 @@ const PlayerView: React.FC = () => {
   }, []);
 
   return (
-    <Container>
-      <Card className="mb-4">
-        <CardBody>
-          <Card.Img variant="top" src={gif} />
-          <Card.Title className="header">Nothing to See Here</Card.Title>
-          <Card.Text>
+    <div className="p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden mb-4">
+        <img src={gif} alt="Nothing to see here" className="w-full" />
+        <div className="p-4">
+          <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Nothing to See Here</h2>
+          <p className="text-gray-700 dark:text-gray-300">
             This tool is intended for GMs to manage their games. Players will
             not see anything here.
-          </Card.Text>
-        </CardBody>
-      </Card>
-    </Container>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

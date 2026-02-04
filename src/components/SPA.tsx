@@ -11,7 +11,12 @@ export default function SPA() {
   const [role, setRole] = React.useState<"GM" | "PLAYER">("GM");
 
   const setTheme = (theme: string): void => {
-    document.getElementById("html_root")?.setAttribute("data-bs-theme", theme);
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
   };
 
   const handlePlayerChange = (player: Player) => {
