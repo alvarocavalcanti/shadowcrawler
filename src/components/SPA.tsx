@@ -6,16 +6,22 @@ import About from "./About";
 import Main from "./Main";
 import Navbar from "./Navbar";
 import { paths } from "./util/constants";
+import { useTheme } from "../hooks/useTheme";
+import { ColorMode } from "../themes";
 
 export default function SPA() {
   const [role, setRole] = React.useState<"GM" | "PLAYER">("GM");
+  const [colorMode, setColorMode] = useState<ColorMode>('dark');
+  const { themeId, changeTheme } = useTheme(colorMode);
 
   const setTheme = (theme: string): void => {
     const root = document.documentElement;
     if (theme === 'dark') {
       root.classList.add('dark');
+      setColorMode('dark');
     } else {
       root.classList.remove('dark');
+      setColorMode('light');
     }
   };
 
@@ -48,7 +54,7 @@ export default function SPA() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Main player={role === "PLAYER"} />} />
-        <Route path={paths.about} element={<About version={version} />} />
+        <Route path={paths.about} element={<About version={version} currentTheme={themeId} onThemeChange={changeTheme} />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
     </Routes>

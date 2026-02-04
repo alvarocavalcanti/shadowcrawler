@@ -4,10 +4,13 @@ import { faBluesky } from "@fortawesome/free-brands-svg-icons";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faGlobeAfrica } from "@fortawesome/free-solid-svg-icons";
+import ThemeSelector from "./ThemeSelector";
+import { ThemeId } from "../themes";
 
-const About: React.FC<{ version: string }> = ({ version }) => {
+const About: React.FC<{ version: string; currentTheme: ThemeId; onThemeChange: (theme: ThemeId) => void }> = ({ version, currentTheme, onThemeChange }) => {
   return (
     <div className="p-4">
+      <ThemeSelector currentTheme={currentTheme} onThemeChange={onThemeChange} />
       <div className="mt-3 text-center">
         <a
           href="https://shadowcrawler.vercel.app"
