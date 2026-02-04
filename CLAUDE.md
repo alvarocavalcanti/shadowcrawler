@@ -15,6 +15,9 @@ npm install
 # Start dev server (runs on localhost with CORS enabled)
 npm run dev
 
+# Type check TypeScript files (no build output)
+tsc --noEmit
+
 # Build for production (compiles TypeScript and builds with Vite)
 npm run build
 
@@ -72,7 +75,8 @@ No global state management library is used. State is synchronized between GM and
 - Target: ES2020
 - Strict mode enabled with additional linting rules (noUnusedLocals, noUnusedParameters, noFallthroughCasesInSwitch)
 - Module resolution: bundler mode
-- After editing TypeScript files, run type checking: `tsc --noEmit`
+- JSX: react-jsx (React 17+ transform)
+- Always run type checking after editing TypeScript files: `tsc --noEmit`
 
 ### Styling
 
@@ -87,3 +91,12 @@ Extension metadata lives in `public/manifest.json` and defines:
 - Plugin name, version, description
 - Icon and homepage URL
 - Popover dimensions (600px height, 400px width)
+
+### Version Management
+
+Version is managed in two places and must be kept in sync:
+
+- `package.json` (version field)
+- `public/manifest.json` (version field)
+
+The project uses date-based versioning (YYYY-MM-DD format).

@@ -41,5 +41,8 @@
     "react-youtube": "^10.1.0",
     "remarkable": "^2.0.1",
     "remarkable-react": "^1.4.3"
+  },
+  "overrides": {
+    "prismjs": "^1.30.0"
   }
 }
