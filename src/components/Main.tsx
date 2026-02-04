@@ -3,6 +3,7 @@ import { timerModes } from "./util/constants";
 import OBR from "@owlbear-rodeo/sdk";
 import PlayerView from "./PlayerView";
 import { ID } from "../main";
+import WhatsNew from "./WhatsNew";
 
 const Main: React.FC<{ player: boolean }> = ({ player }) => {
   const [mode, setMode] = useState<string>(timerModes.oneHour);
