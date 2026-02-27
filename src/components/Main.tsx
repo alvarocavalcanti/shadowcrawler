@@ -3,6 +3,7 @@ import { timerModes } from "./util/constants";
 import OBR from "@owlbear-rodeo/sdk";
 import PlayerView from "./PlayerView";
 import { ID } from "../main";
+import { analytics } from "../utils";
 
 const Main: React.FC<{ player: boolean }> = ({ player }) => {
   const [mode, setMode] = useState<string>(timerModes.oneHour);
@@ -77,6 +78,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
 
   const handleModeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newMode = event.target.value;
+    analytics.track("change_timer_mode", { mode: newMode });
     setMode(newMode);
     OBR.broadcast.sendMessage(`${ID}-mode`, newMode);
     setTimerRunning(false);
@@ -97,10 +99,12 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
   };
 
   const toggleTimer = () => {
+    analytics.track(timerRunning ? "pause_timer" : "start_timer");
     setTimerRunning((prev) => !prev);
   };
 
   const resetTimer = () => {
+    analytics.track("reset_timer");
     setTimerRunning(false);
     if (mode === timerModes.oneHour) {
       setCountdown(3600);
@@ -110,6 +114,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
   };
 
   const handleShowToPlayersChange = () => {
+    analytics.track("toggle_show_to_players");
     setShowToPlayers((prev) => !prev);
   };
 
@@ -135,6 +140,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
   );
 
   const rollRandomEncounter = async () => {
+    analytics.track("roll_random_encounter");
     const roll = Math.floor(Math.random() * 6) + 1;
     setRandomEncounterRoll("-");
     await new Promise((resolve) => setTimeout(resolve, 500)); // Wait for 300ms

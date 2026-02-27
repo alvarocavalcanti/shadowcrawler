@@ -1,5 +1,14 @@
 # Release Notes
 
+## Version 2026-02-27
+
+### Analytics
+
+- Removed Vercel Analytics and Speed Insights dependencies
+- Added Google Analytics event tracking for user actions (timer controls, encounter rolls, mode changes)
+
+---
+
 ## Version 2026-02-04
 
 ### Major Tech Stack Modernization
