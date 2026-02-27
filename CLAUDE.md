@@ -80,9 +80,9 @@ No global state management library is used. State is synchronized between GM and
 
 ### Styling
 
-- Uses Bootstrap 5 via react-bootstrap components
-- Bootstrap Icons for iconography
-- Theme (light/dark) controlled by Owlbear Rodeo, applied to `data-bs-theme` attribute on root element
+- Uses Tailwind CSS v4 with utility classes and `dark:` variants
+- Inline SVG icons
+- Theme (light/dark) controlled by Owlbear Rodeo, toggling `dark` class on `<html>` element
 
 ### Manifest
 
