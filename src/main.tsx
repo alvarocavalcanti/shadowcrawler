@@ -8,7 +8,8 @@ import Homepage from "./components/Homepage";
 
 export const ID = "es.memorablenaton.shadowcrawler";
 const container = document.getElementById("app");
-const root = createRoot(container!);
+if (import.meta.env.MODE !== "test") {
+  const root = createRoot(container!);
 
 const urlParams = new URLSearchParams(window.location.search);
 const isFromOBR = urlParams.has("obrref");
@@ -22,3 +23,4 @@ root.render(
     <Homepage />
   )
 );
+}
