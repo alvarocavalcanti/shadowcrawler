@@ -1,7 +1,7 @@
 {
   "name": "shadowcrawler",
   "private": true,
-  "version": "2026-06-16",
+  "version": "2026-07-20",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,7 +14,6 @@
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^20.12.12",
     "@types/react-dom": "^18.3.0",
-    "@types/remarkable": "^2.0.8",
     "autoprefixer": "^10.4.24",
     "typescript": "^5.4.5",
     "vite": "^8.0.16"
@@ -26,16 +25,13 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@owlbear-rodeo/sdk": "^2.4.0",
-"@vitejs/plugin-react": "^6.0.2",
+    "@vitejs/plugin-react": "^6.0.2",
     "file-saver": "^2.0.5",
     "js-yaml": "^4.2.0",
     "react": "^18.3.1",
     "react-code-blocks": "^0.1.6",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.4",
-    "react-youtube": "^10.1.0",
-    "remarkable": "^2.0.1",
-    "remarkable-react": "^1.4.3"
+    "react-router-dom": "^6.30.4"
   },
   "overrides": {
     "prismjs": "^1.30.0",
