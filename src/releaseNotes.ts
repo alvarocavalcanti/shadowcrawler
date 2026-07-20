@@ -6,6 +6,14 @@ export interface ReleaseHighlight {
 
 export const releaseHighlights: ReleaseHighlight[] = [
   {
+    version: "2026-07-20",
+    date: "July 20, 2026",
+    highlights: [
+      "⏱️ Added 'Custom Time' mode allowing GMs to set precise countdown lengths in minutes",
+      "⚠️ Implemented an automated visual alert that pings all players simultaneously when the torch timer reaches exactly zero",
+    ]
+  },
+  {
     version: "2026-06-16",
     date: "June 16, 2026",
     highlights: [
