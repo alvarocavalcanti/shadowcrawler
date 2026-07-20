@@ -29,8 +29,6 @@ describe('Main (Shadow Crawler)', () => {
 
   it('increments crawling turns counter', () => {
     render(<Main player={false} />);
-    // The crawling turns counter display
-    const counterDisplay = screen.getByText('00'); 
     
     // Find the + button for crawling turns.
     // There are multiple "+" buttons, one for torch turns and one for crawling turns.
