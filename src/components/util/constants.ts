@@ -6,4 +6,5 @@ export const paths: { [key: string]: string } = {
 export const timerModes = {
   oneHour: "1h",
   tenTurns: "10turns",
+  custom: "custom",
 };

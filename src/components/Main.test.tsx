@@ -7,7 +7,7 @@ vi.mock('@owlbear-rodeo/sdk', () => ({
   default: {
     broadcast: {
       sendMessage: vi.fn(),
-      onMessage: vi.fn(),
+      onMessage: vi.fn().mockReturnValue(() => {}),
     },
     scene: {
       isReady: vi.fn().mockResolvedValue(true),

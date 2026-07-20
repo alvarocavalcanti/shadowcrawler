@@ -8,6 +8,7 @@ import { analytics } from "../utils";
 const Main: React.FC<{ player: boolean }> = ({ player }) => {
   const [mode, setMode] = useState<string>(timerModes.oneHour);
   const [countdown, setCountdown] = useState(3600); // 1 hour in seconds
+  const [customMinutes, setCustomMinutes] = useState(60);
   const [torchTurn, setTorchTurn] = useState(0);
   const [crawlingTurns, setCrawlingTurns] = useState(0);
   const [showToPlayers, setShowToPlayers] = useState(false);
@@ -31,50 +32,61 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
     showToPlayers,
     randomEncounterRoll,
     randomEncounterTurn,
+    customMinutes,
   ]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    if (timerRunning && mode === timerModes.oneHour && countdown > 0) {
+    const isCountdownMode = mode === timerModes.oneHour || mode === timerModes.custom;
+    
+    if (timerRunning && isCountdownMode && countdown > 0) {
       timer = setInterval(() => {
-        setCountdown((prevCountdown) => prevCountdown - 1);
+        setCountdown((prevCountdown) => {
+          if (prevCountdown <= 1) {
+            // Reached zero
+            setTimerRunning(false);
+            OBR.notification.show("Torch Timer reached zero!", "WARNING");
+            OBR.broadcast.sendMessage(`${ID}-timer-zero`, true);
+            return 0;
+          }
+          return prevCountdown - 1;
+        });
       }, 1000);
     }
+    
     if (showToPlayers) {
       OBR.broadcast.sendMessage(`${ID}-countdown`, countdown);
     }
     return () => clearInterval(timer);
   }, [timerRunning, mode, countdown]);
 
-  useEffect(
-    () =>
-      OBR.broadcast.onMessage(`${ID}-show-to-players`, (event) => {
-        setShowToPlayers(event.data === true);
-      }),
-    [showToPlayers]
-  );
-
-  useEffect(
-    () =>
-      OBR.broadcast.onMessage(`${ID}-countdown`, (event) => {
-        setCountdown(event.data as number);
-      }),
-    [countdown]
-  );
-
-  useEffect(
-    () =>
-      OBR.broadcast.onMessage(`${ID}-mode`, (event) => {
-        setMode(event.data as string);
-      }),
-    [mode]
-  );
-
   useEffect(() => {
-    OBR.broadcast.onMessage(`${ID}-torchTurn`, (event) => {
+    const unsubPlayers = OBR.broadcast.onMessage(`${ID}-show-to-players`, (event) => {
+      setShowToPlayers(event.data === true);
+    });
+    const unsubCountdown = OBR.broadcast.onMessage(`${ID}-countdown`, (event) => {
+      setCountdown(event.data as number);
+    });
+    const unsubMode = OBR.broadcast.onMessage(`${ID}-mode`, (event) => {
+      setMode(event.data as string);
+    });
+    const unsubTorchTurn = OBR.broadcast.onMessage(`${ID}-torchTurn`, (event) => {
       setTorchTurn(event.data as number);
     });
-  }, [torchTurn]);
+    const unsubZero = OBR.broadcast.onMessage(`${ID}-timer-zero`, (event) => {
+      if (event.data === true) {
+        OBR.notification.show("Torch Timer reached zero!", "WARNING");
+      }
+    });
+
+    return () => {
+      unsubPlayers();
+      unsubCountdown();
+      unsubMode();
+      unsubTorchTurn();
+      unsubZero();
+    };
+  }, []);
 
   const handleModeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newMode = event.target.value;
@@ -84,9 +96,18 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
     setTimerRunning(false);
     if (newMode === timerModes.oneHour) {
       setCountdown(3600);
+    } else if (newMode === timerModes.custom) {
+      setCountdown(customMinutes * 60);
     } else {
       setTorchTurn(0);
     }
+  };
+
+  const handleCustomMinutesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const val = parseInt(event.target.value) || 0;
+    setCustomMinutes(val);
+    setCountdown(val * 60);
+    setTimerRunning(false);
   };
 
   const handleTorchTurn = (delta: number) => {
@@ -108,6 +129,8 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
     setTimerRunning(false);
     if (mode === timerModes.oneHour) {
       setCountdown(3600);
+    } else if (mode === timerModes.custom) {
+      setCountdown(customMinutes * 60);
     } else {
       setTorchTurn(0);
     }
@@ -143,7 +166,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
     analytics.track("roll_random_encounter");
     const roll = Math.floor(Math.random() * 6) + 1;
     setRandomEncounterRoll("-");
-    await new Promise((resolve) => setTimeout(resolve, 500)); // Wait for 300ms
+    await new Promise((resolve) => setTimeout(resolve, 500));
     setRandomEncounterRoll(roll);
     setRandomEncounterTurn(crawlingTurns)
   };
@@ -157,6 +180,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
       showToPlayers,
       randomEncounterRoll,
       randomEncounterTurn,
+      customMinutes,
     };
     localStorage.setItem("shadowcrawlerState", JSON.stringify(state));
   };
@@ -165,19 +189,22 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
     const savedState = localStorage.getItem("shadowcrawlerState");
     if (savedState) {
       const state = JSON.parse(savedState);
-      setMode(state.mode);
-      setCountdown(state.countdown);
-      setTorchTurn(state.turns);
-      setCrawlingTurns(state.crawlingTurns);
-      setShowToPlayers(state.showToPlayers);
-      setRandomEncounterRoll(state.randomEncounterRoll);
-      setRandomEncounterTurn(state.randomEncounterTurn);
+      setMode(state.mode || timerModes.oneHour);
+      setCountdown(state.countdown ?? 3600);
+      setTorchTurn(state.turns || 0);
+      setCrawlingTurns(state.crawlingTurns || 0);
+      setShowToPlayers(state.showToPlayers || false);
+      setRandomEncounterRoll(state.randomEncounterRoll || "-");
+      setRandomEncounterTurn(state.randomEncounterTurn || 0);
+      setCustomMinutes(state.customMinutes || 60);
     }
   };
 
   useEffect(() => {
     OBR.broadcast.sendMessage(`${ID}-show-to-players`, showToPlayers);
   }, [showToPlayers]);
+
+  const isCountdownMode = mode === timerModes.oneHour || mode === timerModes.custom;
 
   return player ? (
     showToPlayers ? (
@@ -186,13 +213,15 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
         <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mt-4">
           <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Torch Timer</h2>
           <div className="text-gray-700 dark:text-gray-300">
-            {mode === timerModes.oneHour ? (
+            {isCountdownMode ? (
               <div>
                 <p className="mt-4">
                   Time Remaining
                   <br />
-                  {Math.floor(countdown / 60)}:
-                  {countdown === 3600 ? "00" : countdown % 60}
+                  <span className={`text-2xl font-mono ${countdown === 0 ? "text-red-600 dark:text-red-400 font-bold" : ""}`}>
+                    {Math.floor(countdown / 60)}:
+                    {(countdown % 60).toString().padStart(2, '0')}
+                  </span>
                 </p>
               </div>
             ) : (
@@ -234,23 +263,37 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
             className="w-full px-3 py-2 mb-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           >
             <option value={timerModes.oneHour}>1 Hour</option>
+            <option value={timerModes.custom}>Custom Time</option>
             <option value={timerModes.tenTurns}>10 Turns</option>
           </select>
+          {mode === timerModes.custom && (
+            <div className="mt-2 flex items-center gap-2">
+              <input 
+                type="number" 
+                min="1"
+                value={customMinutes}
+                onChange={handleCustomMinutesChange}
+                className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              />
+              <span className="text-gray-700 dark:text-gray-300">minutes</span>
+            </div>
+          )}
         </div>
-        {mode === timerModes.oneHour ? (
+        {isCountdownMode ? (
           <div>
             <p className="text-gray-700 dark:text-gray-300 mb-4">
               Time Remaining
               <br />
-              <span className="text-2xl font-mono">
+              <span className={`text-2xl font-mono ${countdown === 0 ? "text-red-600 dark:text-red-400 font-bold" : ""}`}>
                 {Math.floor(countdown / 60)}:
-                {countdown === 3600 ? "00" : countdown % 60}
+                {(countdown % 60).toString().padStart(2, '0')}
               </span>
             </p>
             <div className="flex gap-2">
               <button
                 onClick={toggleTimer}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                disabled={countdown === 0}
+                className={`px-4 py-2 text-white rounded transition-colors ${countdown === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
               >
                 {timerRunning ? (
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" className="inline">
