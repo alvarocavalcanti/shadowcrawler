@@ -144,7 +144,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
   const renderShowToPlayersButton = () => (
     <button
       onClick={() => handleShowToPlayersChange()}
-      className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+      className="px-4 py-2 bg-theme-primary text-white rounded transition-colors"
       title={showToPlayers ? "Hide from Players" : "Show to Players"}
     >
       {showToPlayers ? (
@@ -209,16 +209,16 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
   return player ? (
     showToPlayers ? (
       <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Shadow Crawler</h1>
-        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mt-4">
-          <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Torch Timer</h2>
-          <div className="text-gray-700 dark:text-gray-300">
+        <h1 className="text-2xl font-bold mb-4 text-theme">Shadow Crawler</h1>
+        <div className="bg-theme-card rounded-lg border border-theme p-4 mt-4">
+          <h2 className="text-lg font-semibold mb-3 text-theme">Torch Timer</h2>
+          <div className="text-theme-secondary">
             {isCountdownMode ? (
               <div>
                 <p className="mt-4">
                   Time Remaining
                   <br />
-                  <span className={`text-2xl font-mono ${countdown === 0 ? "text-red-600 dark:text-red-400 font-bold" : ""}`}>
+                  <span className={`text-2xl font-mono ${countdown === 0 ? "text-theme-danger font-bold" : ""}`}>
                     {Math.floor(countdown / 60)}:
                     {(countdown % 60).toString().padStart(2, '0')}
                   </span>
@@ -237,30 +237,30 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
     )
   ) : (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Shadow Crawler</h1>
-      <p className="mb-4 text-gray-700 dark:text-gray-300">
+      <h1 className="text-2xl font-bold mb-2 text-theme">Shadow Crawler</h1>
+      <p className="mb-4 text-theme-secondary">
         A toolset for running the Crawling Phase of the{" "}
         <a
           href="https://www.thearcanelibrary.com/pages/shadowdark"
           target="_blank"
           rel="noreferrer"
-          className="text-blue-600 dark:text-blue-400 hover:underline"
+          className="text-theme-primary hover:underline"
         >
           Shadowdark RPG
         </a>
         .
       </p>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mt-4">
-        <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Torch Timer</h2>
+      <div className="bg-theme-card rounded-lg border border-theme p-4 mt-4">
+        <h2 className="text-lg font-semibold mb-3 text-theme">Torch Timer</h2>
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          <label className="block text-sm font-medium mb-2 text-theme-secondary">
             Timer Mode
           </label>
           <select
             value={mode}
             onChange={handleModeChange}
-            className="w-full px-3 py-2 mb-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            className="w-full px-3 py-2 mb-2 border border-theme rounded bg-theme-card text-theme"
           >
             <option value={timerModes.oneHour}>1 Hour</option>
             <option value={timerModes.custom}>Custom Time</option>
@@ -273,18 +273,18 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
                 min="1"
                 value={customMinutes}
                 onChange={handleCustomMinutesChange}
-                className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-24 px-3 py-2 border border-theme rounded bg-theme-card text-theme"
               />
-              <span className="text-gray-700 dark:text-gray-300">minutes</span>
+              <span className="text-theme-secondary">minutes</span>
             </div>
           )}
         </div>
         {isCountdownMode ? (
           <div>
-            <p className="text-gray-700 dark:text-gray-300 mb-4">
+            <p className="text-theme-secondary mb-4">
               Time Remaining
               <br />
-              <span className={`text-2xl font-mono ${countdown === 0 ? "text-red-600 dark:text-red-400 font-bold" : ""}`}>
+              <span className={`text-2xl font-mono ${countdown === 0 ? "text-theme-danger font-bold" : ""}`}>
                 {Math.floor(countdown / 60)}:
                 {(countdown % 60).toString().padStart(2, '0')}
               </span>
@@ -293,7 +293,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
               <button
                 onClick={toggleTimer}
                 disabled={countdown === 0}
-                className={`px-4 py-2 text-white rounded transition-colors ${countdown === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
+                className={`px-4 py-2 text-white rounded transition-colors ${countdown === 0 ? "bg-theme-secondary opacity-50 cursor-not-allowed" : "bg-theme-primary"}`}
               >
                 {timerRunning ? (
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" className="inline">
@@ -307,7 +307,7 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
               </button>
               <button
                 onClick={resetTimer}
-                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+                className="px-4 py-2 bg-theme-secondary text-white rounded transition-colors"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" className="inline">
                   <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
@@ -321,19 +321,19 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
           <div className="flex gap-2">
             <button
               onClick={() => handleTorchTurn(-1)}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 bg-theme-primary text-white rounded transition-colors"
             >
               -
             </button>
             <button
-              className="px-4 py-2 bg-gray-500 text-white rounded cursor-default"
+              className="px-4 py-2 bg-theme-secondary text-white rounded cursor-default"
             >
               {torchTurn < 10 ? "0" : ""}
               {torchTurn}
             </button>
             <button
               onClick={() => handleTorchTurn(1)}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors mr-2"
+              className="px-4 py-2 bg-theme-primary text-white rounded transition-colors mr-2"
             >
               +
             </button>
@@ -342,51 +342,51 @@ const Main: React.FC<{ player: boolean }> = ({ player }) => {
         )}
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mt-4">
-        <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Crawling Turns Counter</h2>
+      <div className="bg-theme-card rounded-lg border border-theme p-4 mt-4">
+        <h2 className="text-lg font-semibold mb-3 text-theme">Crawling Turns Counter</h2>
         <div className="flex gap-2">
           <button
             onClick={() => handleCrawlingTurnsChange(-1)}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-theme-primary text-white rounded transition-colors"
           >
             -
           </button>
           <button
-            className="px-4 py-2 bg-gray-500 text-white rounded cursor-default"
+            className="px-4 py-2 bg-theme-secondary text-white rounded cursor-default"
           >
             {crawlingTurns < 10 ? "0" : ""}
             {crawlingTurns}
           </button>
           <button
             onClick={() => handleCrawlingTurnsChange(1)}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-theme-primary text-white rounded transition-colors"
           >
             +
           </button>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-600 p-4 mt-4 mb-4">
-        <h2 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Random Encounter Check</h2>
+      <div className="bg-theme-card rounded-lg border border-theme p-4 mt-4 mb-4">
+        <h2 className="text-lg font-semibold mb-3 text-theme">Random Encounter Check</h2>
         <div className="flex gap-2 items-center">
           <button
             onClick={() => rollRandomEncounter()}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-theme-primary text-white rounded transition-colors"
           >
             Roll 1d6
           </button>
           <button
             className={`px-4 py-2 rounded cursor-default ${
               randomEncounterRoll === 1
-                ? "bg-red-600 text-white"
-                : "bg-gray-500 text-white"
+                ? "bg-theme-danger text-white"
+                : "bg-theme-secondary text-white"
             }`}
             disabled
           >
             {randomEncounterRoll}
           </button>
         </div>
-        <p className="mt-2 text-gray-700 dark:text-gray-300">
+        <p className="mt-2 text-theme-secondary">
           Last check's <strong>Turn</strong>: {randomEncounterTurn}
         </p>
       </div>

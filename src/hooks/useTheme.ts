@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { themes, ThemeId, ColorMode } from '../themes';
 
-const THEME_STORAGE_KEY = 'map-location-keys-theme';
+const THEME_STORAGE_KEY = 'shadowcrawler-theme';
 
 export const useTheme = (colorMode: ColorMode) => {
   const [themeId, setThemeId] = useState<ThemeId>(() => {

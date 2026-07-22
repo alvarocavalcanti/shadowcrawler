@@ -110,3 +110,15 @@ body {
   border-color: var(--color-border-hover);
 }
 
+
+.text-theme-primary {
+  color: var(--color-primary);
+}
+
+.text-theme-primary:hover {
+  color: var(--color-primary-hover);
+}
+
+.text-theme-danger {
+  color: var(--color-danger);
+}

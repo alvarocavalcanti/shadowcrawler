@@ -16,7 +16,7 @@ const About: React.FC<{ version: string; currentTheme: ThemeId; onThemeChange: (
         <a
           href="https://shadowcrawler.vercel.app"
           target="_blank"
-          className="m-1 text-blue-600 dark:text-blue-400 hover:underline"
+          className="m-1 text-theme-primary hover:underline"
         >
           <FontAwesomeIcon icon={faGlobeAfrica} /> shadowcrawler.vercel.app
         </a>
@@ -25,7 +25,7 @@ const About: React.FC<{ version: string; currentTheme: ThemeId; onThemeChange: (
         <a
           href="https://github.com/alvarocavalcanti/shadowcrawler"
           target="_blank"
-          className="m-1 text-blue-600 dark:text-blue-400 hover:underline"
+          className="m-1 text-theme-primary hover:underline"
         >
           <FontAwesomeIcon icon={faGithub} /> alvarocavalcanti/shadowcrawler
         </a>
@@ -34,7 +34,7 @@ const About: React.FC<{ version: string; currentTheme: ThemeId; onThemeChange: (
         <a
           href="https://bsky.app/profile/alvarocavalcanti.bsky.social"
           target="_blank"
-          className="m-1 text-blue-600 dark:text-blue-400 hover:underline"
+          className="m-1 text-theme-primary hover:underline"
         >
           <FontAwesomeIcon icon={faBluesky} /> alvarocavalcanti.bsky.social
         </a>
@@ -43,14 +43,14 @@ const About: React.FC<{ version: string; currentTheme: ThemeId; onThemeChange: (
         <a
           href="https://twitter.com/alvarocavalcant"
           target="_blank"
-          className="m-1 text-blue-600 dark:text-blue-400 hover:underline"
+          className="m-1 text-theme-primary hover:underline"
         >
           <FontAwesomeIcon icon={faTwitter} /> alvarocavalcant
         </a>
       </div>
       <DonationButtons />
       <div className="text-center">
-        <em className="text-gray-500 dark:text-gray-400 text-sm">Version: {version}</em>
+        <em className="text-theme-secondary text-sm">Version: {version}</em>
       </div>
     </div>
   );
