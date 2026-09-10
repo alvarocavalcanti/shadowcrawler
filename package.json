@@ -25,7 +25,7 @@
     "jsdom": "^29.1.1",
     "typescript": "^5.4.5",
     "vite": "^8.0.16",
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -36,7 +36,7 @@
     "@owlbear-rodeo/sdk": "^2.4.0",
     "@vitejs/plugin-react": "^6.0.2",
     "file-saver": "^2.0.5",
-    "js-yaml": "^4.3.1",
+    "js-yaml": "^4.3.2",
     "react": "^18.3.1",
     "react-code-blocks": "^0.1.6",
     "react-dom": "^18.3.1",
